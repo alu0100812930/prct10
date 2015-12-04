@@ -34,7 +34,26 @@ proyecto herramienta de cobertura de código coveralls con su respectivo fichero
 Árbol de ficheros y directorios
 -------------------------------
 ``` 
-
+.
+├── CODE_OF_CONDUCT.md
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE.txt
+├── README.md
+├── Rakefile
+├── bin
+│   ├── console
+│   └── setup
+├── functional.gemspec
+├── lib
+│   ├── functional
+│   │   ├── doubly_list.rb
+│   │   ├── references.rb
+│   │   └── version.rb
+│   └── functional.rb
+└── spec
+    ├── functional_spec.rb
+    └── spec_helper.rb
 
 ``` 
     
