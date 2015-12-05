@@ -15,6 +15,11 @@ describe Functional do
       expect(@edoc.to_s).to be == "Chacon, S. & Straub, B. (2009). Pro Git 2009th Edition (5), [En línea]. Tenerife: Drago. Disponible en: https://git-scm.com/book/en/v2 [2008, 22 de Mayo]."
     end
     
+    it "Las entradas de la lista de referencias debe estar en orden alfabético de acuerdo a los apellidos del primer autor de cada trabajo." do
+      @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
+      expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
+    end
+    
     
     
     
