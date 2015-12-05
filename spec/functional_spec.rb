@@ -46,8 +46,13 @@ año como sufijos. Cuando se refiera a estas publicaciones en su escrito utilice
 sufijos con el año para que el lector sepa a cuál referencia se está refiriendo. " do
    @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
    @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Problemas", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
-     @listar= RList.new([@diario3, @diario, @diario2])
-      expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]"
+    @diario4= Newspaper.new(:author => "Aguad, J.", :title_a => "Altura", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
+     @listar= RList.new([@diario4, @diario, @diario2, @diario3])
+      expect(@listar.to_s).to be == "[#{@diario4}]<-->[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]"
+      expect(@diario4.p_date).to be == "2008a"
+      expect(@diario2.p_date).to be == "2008b"
+      expect(@diario.p_date).to be == "2008c"
+      expect(@diario3.p_date).to be == "2008d"
     end
     
    

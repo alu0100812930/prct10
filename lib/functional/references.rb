@@ -7,6 +7,7 @@ class Biblioref
       attr_accessor :edit_num #Numero de edición
       attr_accessor :p_date #Fecha de publicación
       attr_accessor :volume #Volumen
+      attr_accessor :flag #Bandera para sufijos
       def initialize(params = {})
           @author = []
           if params.fetch(:author, nil).class.to_s=="Array"
@@ -22,7 +23,7 @@ class Biblioref
           @edit_num = params.fetch(:edit_num, nil)
           @p_date = params.fetch(:p_date, nil)
           @p_place = params.fetch(:p_place, nil)
-        
+          @flag=0
           end
           
       def to_s
@@ -56,6 +57,15 @@ class Book < Biblioref
     end
     def to_s
         super
+end
+
+def <=>(another)
+  if @author == another.author && @p_date==another.p_date
+    @flag=1
+    @title<=>another.title
+  else
+      super
+    end
 end
 end
 
@@ -101,6 +111,15 @@ end
 end
       "#{names} (#{@p_date}). #{@title_a}. En #{editors} (comps), #{@title} (pp. #{@pages}) (#{@edit_num}) (#{@volume}). #{@p_place}: #{@p_house}."
     end 
+    
+   def <=>(another)
+        if @author == another.author && @p_date==another.p_date
+          @flag=1
+    @title_a<=>another.title_a
+else
+  super
+end
+end
 end
 
 class Newspaper < Biblioref
@@ -125,6 +144,14 @@ end
   end
       "#{names} (#{@p_date}). #{@title_a}. #{@title}, pp. #{@pages}."
    end
+     def <=>(another)
+        if @author == another.author && @p_date==another.p_date
+          @flag=1
+    @title_a<=>another.title_a
+else
+  super
+end
+end
 end
 
 class EDoc < Biblioref
@@ -156,4 +183,14 @@ end
      "#{names} (#{@p_date}). #{@title} (#{@edit_num}), [#{@medium}]. #{@p_place}: #{@p_house} [#{@a_date}]."
  end
 end
+
+def <=>(another)
+  if @author == another.author && @p_date==another.p_date
+    @flag=1
+    @title<=>another.title
+  else
+      super
+    end
+end
+
 end
