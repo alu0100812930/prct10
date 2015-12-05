@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe Functional do
@@ -20,7 +22,16 @@ describe Functional do
       expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
     end
     
-    
+    it "Si tiene más de un artículo del (los) mismo autor(es) (referencias de un autor solo o referencias de múltiples autores con 
+    exactamente los mismos autores en exactamente el mismo orden de aparición) ordene de acuerdo al año de publicación, comenzando con el 
+    más antiguo." do
+       @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "Más lejos", :title => "El Mercurio", :p_date => 2009, :pages => "4, Suplemento Deportes")
+       @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Intermedio", :title => "El Mercurio", :p_date => 2007, :pages => "4, Suplemento Deportes")
+      @edoc2= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> 2010, :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
+       @edoc3= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> 2011, :title => "Pro Git 2011th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2011, 22 de Mayo", :medium => "En línea")
+      @listar= RList.new([@diario3, @diario2, @diario, @edoc3, @edoc2, @edoc])
+      expect(@listar.to_s).to be == "[#{@diario3}]<-->[#{@diario}]<-->[#{@diario2}]<-->[#{@edoc}]<-->[#{@edoc2}]<-->[#{@edoc3}]"
+    end
     
     
    
