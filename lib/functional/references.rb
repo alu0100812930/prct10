@@ -41,6 +41,12 @@ end
     
      def <=>(another)
       @author<=>another.author
+       if (@author != another.author)
+      @author<=>another.author
+  elsif (@author == another.author && @p_date!=another.p_date)
+    @author<=>another.author
+    @p_date<=>another.p_date
+  end
     end
 end
 
