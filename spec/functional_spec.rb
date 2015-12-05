@@ -21,9 +21,7 @@ describe Functional do
       expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
     end
     
-    it "Si tiene más de un artículo del (los) mismo autor(es) (referencias de un autor solo o referencias de múltiples autores con 
-    exactamente los mismos autores en exactamente el mismo orden de aparición) ordene de acuerdo al año de publicación, comenzando con el 
-    más antiguo." do
+    it "Si tiene más de un artículo del (los) mismo autor(es) (referencias de un autor solo o referencias de múltiples autores con exactamente los mismos autores en exactamente el mismo orden de aparición) ordene de acuerdo al año de publicación, comenzando con el más antiguo." do
        @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "Más lejos", :title => "El Mercurio", :p_date => "2009", :pages => "4, Suplemento Deportes")
        @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Intermedio", :title => "El Mercurio", :p_date => "2007", :pages => "4, Suplemento Deportes")
       @edoc2= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> "2005", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
@@ -39,11 +37,7 @@ describe Functional do
       expect(@listar.to_s).to be == "[#{@edoc2}]<-->[#{@edoc}]<-->[#{@edoc3}]"
     end
     
-    it "Si está usando más de una referencia del mismo autor (o el mismo grupo de autores listados
-en el mismo orden) publicados en el mismo año, organícelos en la lista de referencias
-alfabéticamente de acuerdo al título del artículo o del capítulo. Entonces asigne letras al
-año como sufijos. Cuando se refiera a estas publicaciones en su escrito utilice las letras de
-sufijos con el año para que el lector sepa a cuál referencia se está refiriendo. " do
+    it "Si está usando más de una referencia del mismo autor (o el mismo grupo de autores listados en el mismo orden) publicados en el mismo año, organícelos en la lista de referencias alfabéticamente de acuerdo al título del artículo o del capítulo. Entonces asigne letras al año como sufijos. Cuando se refiera a estas publicaciones en su escrito utilice las letras de sufijos con el año para que el lector sepa a cuál referencia se está refiriendo. " do
    @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
    @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Problemas", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
     @diario4= Newspaper.new(:author => "Aguad, J.", :title_a => "Altura", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
@@ -59,9 +53,9 @@ sufijos con el año para que el lector sepa a cuál referencia se está refirien
         @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
       @edoc2= EDoc.new(:author => "Chacon, S.", :p_date=> "2010", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
        @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
-       @listar.insert_h(@diario2)
+       @listar.insert(@diario2)
        expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
-       @listar.insert_h(@edoc2)
-       expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@edoc2}]<-->[#{@libro}]"
+       @listar.insert(@edoc2)
+       expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc2}]<-->[#{@edoc}]<-->[#{@libro}]"
    end
 end

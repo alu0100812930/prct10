@@ -5,6 +5,14 @@ class RList < DList
   ordenar
   end
   
+def insert(content)
+    insert_h(content)
+    quitarsufijos
+    ordenar
+end 
+
+  
+  
   def ordenar
      orden = sort_by{|node| node["value"]}
      if (orden.count > 1)
