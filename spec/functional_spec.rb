@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe Functional do
  before:all do 
-        @diario= Newspaper.new(:author => "Aguad, J.", :title_a => "Más cerca", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
-        @libro = Book.new(:author => ["Thomas, D.", "Hunt, A.", "Fowler, C."], :p_date => 2013, :title => "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide", :volume =>1, :p_place =>"Ohio", :p_house => "Pragmatic Bookshelf",:edit_num => 4)
-        @libroeditado= EBook.new(:author => "Castanigno, J.", :editors => ["J. Aguad", "M. Gutiérrez"], :title_a => "Técnicas, materiales y aplicaciones en nanotecnología", :title => "La Nueva Bioquímica", :volume => "3", :edit_num => 2, :pages => "189-191", :p_date => 2007, :p_place => "Madrid", :p_house => "Espasa")
-        @edoc= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> 2009, :title => "Pro Git 2009th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2008, 22 de Mayo", :medium => "En línea")
+        @diario= Newspaper.new(:author => "Aguad, J.", :title_a => "Más cerca", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
+        @libro = Book.new(:author => ["Thomas, D.", "Hunt, A.", "Fowler, C."], :p_date => "2013", :title => "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide", :volume =>1, :p_place =>"Ohio", :p_house => "Pragmatic Bookshelf",:edit_num => 4)
+        @libroeditado= EBook.new(:author => "Castanigno, J.", :editors => ["J. Aguad", "M. Gutiérrez"], :title_a => "Técnicas, materiales y aplicaciones en nanotecnología", :title => "La Nueva Bioquímica", :volume => "3", :edit_num => 2, :pages => "189-191", :p_date => "2007", :p_place => "Madrid", :p_house => "Espasa")
+        @edoc= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> "2009", :title => "Pro Git 2009th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2008, 22 de Mayo", :medium => "En línea")
     end
     
     it "La salida en pantalla de los objetos de las referencias se corresponden con el formato de la Asociación de Psicología Americana" do
@@ -24,18 +24,18 @@ describe Functional do
     it "Si tiene más de un artículo del (los) mismo autor(es) (referencias de un autor solo o referencias de múltiples autores con 
     exactamente los mismos autores en exactamente el mismo orden de aparición) ordene de acuerdo al año de publicación, comenzando con el 
     más antiguo." do
-       @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "Más lejos", :title => "El Mercurio", :p_date => 2009, :pages => "4, Suplemento Deportes")
-       @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Intermedio", :title => "El Mercurio", :p_date => 2007, :pages => "4, Suplemento Deportes")
-      @edoc2= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> 2005, :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
-       @edoc3= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> 2011, :title => "Pro Git 2011th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2011, 22 de Mayo", :medium => "En línea")
+       @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "Más lejos", :title => "El Mercurio", :p_date => "2009", :pages => "4, Suplemento Deportes")
+       @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Intermedio", :title => "El Mercurio", :p_date => "2007", :pages => "4, Suplemento Deportes")
+      @edoc2= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> "2005", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
+       @edoc3= EDoc.new(:author => ["Chacon, S.", "Straub, B."], :p_date=> "2011", :title => "Pro Git 2011th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2011, 22 de Mayo", :medium => "En línea")
       @listar= RList.new([@diario3, @diario2, @diario, @edoc3, @edoc2, @edoc])
       expect(@listar.to_s).to be == "[#{@diario3}]<-->[#{@diario}]<-->[#{@diario2}]<-->[#{@edoc2}]<-->[#{@edoc}]<-->[#{@edoc3}]"
     end
     
     it "Cuando un autor aparezca tanto como un autor solo y, en otra cita, como el primer autor de un grupo, liste primero las entradas de un autor." do
-      @edoc2= EDoc.new(:author => "Chacon, S.", :p_date=> 2010, :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
-    @edoc3= EDoc.new(:author => ["Chacon, S.", "Straub, B.", "Smith, W."], :p_date=> 2011, :title => "Pro Git 2011th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2011, 22 de Mayo", :medium => "En línea")
-    @listar= RList.new([@edoc2, @edoc, @edoc3])
+      @edoc2= EDoc.new(:author => "Chacon, S.", :p_date=> "2010", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
+    @edoc3= EDoc.new(:author => ["Chacon, S.", "Straub, B.", "Smith, W."], :p_date=> "2011", :title => "Pro Git 2011th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2011, 22 de Mayo", :medium => "En línea")
+    @listar= RList.new([@edoc, @edoc2, @edoc3])
       expect(@listar.to_s).to be == "[#{@edoc2}]<-->[#{@edoc}]<-->[#{@edoc3}]"
     end
     
@@ -44,9 +44,9 @@ en el mismo orden) publicados en el mismo año, organícelos en la lista de refe
 alfabéticamente de acuerdo al título del artículo o del capítulo. Entonces asigne letras al
 año como sufijos. Cuando se refiera a estas publicaciones en su escrito utilice las letras de
 sufijos con el año para que el lector sepa a cuál referencia se está refiriendo. " do
-   @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
-   @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Problemas", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
-    @diario4= Newspaper.new(:author => "Aguad, J.", :title_a => "Altura", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
+   @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
+   @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Problemas", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
+    @diario4= Newspaper.new(:author => "Aguad, J.", :title_a => "Altura", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
      @listar= RList.new([@diario4, @diario, @diario2, @diario3])
       expect(@listar.to_s).to be == "[#{@diario4}]<-->[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]"
       expect(@diario4.p_date).to be == "2008a"
@@ -55,5 +55,13 @@ sufijos con el año para que el lector sepa a cuál referencia se está refirien
       expect(@diario3.p_date).to be == "2008d"
     end
     
-   
+   it "Se pueden insertar nuevas referencias a una lista y esta seguirá ordenada" do
+        @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
+      @edoc2= EDoc.new(:author => "Chacon, S.", :p_date=> "2010", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
+       @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
+       @listar.insert_h(@diario2)
+       expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
+       @listar.insert_h(@edoc2)
+       expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@edoc2}]<-->[#{@libro}]"
+   end
 end

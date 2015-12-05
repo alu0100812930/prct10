@@ -17,21 +17,29 @@ class RList < DList
  end
  
  def sufijos
-     letter="a"
      aux=@head
+     letter="a"
      while aux!=nil
      year = aux["value"].p_date
      while  aux["next"]!=nil && aux["value"].author==aux["next"]["value"].author && year==aux["next"]["value"].p_date
-     aux["value"].p_date=aux["value"].p_date.to_s + letter
+     aux["value"].p_date=aux["value"].p_date + letter
      year=aux["next"]["value"].p_date
      aux=aux["next"]
      letter=letter.next
           if  aux["next"]==nil || (aux["value"].author!=aux["next"]["value"].author && aux["value"].p_date!=aux["next"]["value"].p_date) 
-         aux["value"].p_date=aux["value"].p_date.to_s + letter
+         aux["value"].p_date=aux["value"].p_date + letter
      end
 
  end
    letter="a"
+     aux = aux["next"]    
+ end
+ end
+ 
+ def quitarsufijos
+     aux=@head
+     while aux!=nil
+    aux["value"].p_date=aux["value"].p_date.tr('^0-9', '')
      aux = aux["next"]    
  end
  end
