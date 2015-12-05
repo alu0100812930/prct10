@@ -1,5 +1,4 @@
 # encoding: UTF-8
-
 require 'spec_helper'
 
 describe Functional do
@@ -40,6 +39,16 @@ describe Functional do
       expect(@listar.to_s).to be == "[#{@edoc2}]<-->[#{@edoc}]<-->[#{@edoc3}]"
     end
     
+    it "Si está usando más de una referencia del mismo autor (o el mismo grupo de autores listados
+en el mismo orden) publicados en el mismo año, organícelos en la lista de referencias
+alfabéticamente de acuerdo al título del artículo o del capítulo. Entonces asigne letras al
+año como sufijos. Cuando se refiera a estas publicaciones en su escrito utilice las letras de
+sufijos con el año para que el lector sepa a cuál referencia se está refiriendo. " do
+   @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
+   @diario3= Newspaper.new(:author => "Aguad, J.", :title_a => "Problemas", :title => "El Mercurio", :p_date => 2008, :pages => "4, Suplemento Deportes")
+     @listar= RList.new([@diario3, @diario, @diario2])
+      expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]"
+    end
     
    
 end
