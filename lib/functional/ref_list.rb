@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class RList < DList
     attr_accessor :letter #letra para los sufijos de los años
   def initialize(content = nil)

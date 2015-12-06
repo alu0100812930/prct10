@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class DList
     include Enumerable
        Node = Struct.new(:value,:before, :next)

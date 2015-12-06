@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require "functional/version"
 require "functional/doubly_list"
 require "functional/references"
