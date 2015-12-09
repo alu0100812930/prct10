@@ -49,7 +49,7 @@ describe Functional do
       expect(@diario3.p_date).to be == "2008d"
     end
     
-   it "Se pueden insertar nuevas referencias a una lista y esta seguirá ordenada" do
+   it "Se pueden insertar nuevas referencias a una lista, hacer extracciones y esta seguirá ordenada" do
         @diario2= Newspaper.new(:author => "Aguad, J.", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
       @edoc2= EDoc.new(:author => "Chacon, S.", :p_date=> "2010", :title => "Pro Git 2010th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2010, 22 de Mayo", :medium => "En línea")
        @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
@@ -57,5 +57,9 @@ describe Functional do
        expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@libro}]"
        @listar.insert(@edoc2)
        expect(@listar.to_s).to be == "[#{@diario2}]<-->[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc2}]<-->[#{@edoc}]<-->[#{@libro}]"
+       @listar.extract_head
+       expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc2}]<-->[#{@edoc}]<-->[#{@libro}]"
+       @listar.extract_end
+       expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc2}]<-->[#{@edoc}]"
    end
 end
