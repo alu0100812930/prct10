@@ -30,12 +30,12 @@ end
      letter="a"
      while aux!=nil
      year = aux["value"].p_date
-     while  aux["next"]!=nil && aux["value"].author==aux["next"]["value"].author && year==aux["next"]["value"].p_date
+     while  aux["next"]!=nil && aux["value"].author_surname==aux["next"]["value"].author_surname && year==aux["next"]["value"].p_date
      aux["value"].p_date=aux["value"].p_date + letter
      year=aux["next"]["value"].p_date
      aux=aux["next"]
      letter=letter.next
-          if  aux["next"]==nil || (aux["value"].author!=aux["next"]["value"].author && aux["value"].p_date!=aux["next"]["value"].p_date) 
+          if  aux["next"]==nil || (aux["value"].author_surname!=aux["next"]["value"].author_surname && aux["value"].p_date!=aux["next"]["value"].p_date) 
          aux["value"].p_date=aux["value"].p_date + letter
      end
 

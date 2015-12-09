@@ -1,22 +1,26 @@
 # encoding: UTF-8
 class Biblioref
   include Comparable
-  attr_accessor :author
+  attr_accessor :author_name
+  attr_accessor :author_surname
       attr_accessor :title
       attr_accessor :p_house #Casa editorial
       attr_accessor :p_place #Lugar de publicación
       attr_accessor :edit_num #Numero de edición
       attr_accessor :p_date #Fecha de publicación
       attr_accessor :volume #Volumen
-      attr_accessor :flag #Bandera para sufijos
       def initialize(params = {})
-          @author = []
-          if params.fetch(:author, nil).class.to_s=="Array"
-            for i in 0..params.fetch(:author, nil).count-1
-            @author << params.fetch(:author, nil)[i]
+          @author_name = []
+          @author_surname = []
+          if params.fetch(:author_name, nil).class.to_s=="Array"
+            for i in 0..params.fetch(:author_name, nil).count-1
+            @author_name << params.fetch(:author_name, nil)[i]
+              @author_surname << params.fetch(:author_surname, nil)[i]
           end
           else
-            @author << params.fetch(:author, nil)
+             @author_name << params.fetch(:author_name, nil)
+              @author_surname << params.fetch(:author_surname, nil)
+          
           end
           @title = params.fetch(:title,nil)
           @volume= params.fetch(:volume, nil)
@@ -24,29 +28,27 @@ class Biblioref
           @edit_num = params.fetch(:edit_num, nil)
           @p_date = params.fetch(:p_date, nil)
           @p_place = params.fetch(:p_place, nil)
-          @flag=0
           end
           
       def to_s
-          names =""
+          fullnames = ""
           i=0
-  while i < @author.count
-if i != @author.count-1
-  names= names + "#{@author[i]} & "
+  while i < @author_name.count
+if i != @author_name.count-1
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}. & "
 else
-  names= names + "#{@author[i]}"
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}."
 end
   i=i+1
 end
-      "#{names} (#{@p_date}). #{@title} (#{@edit_num}) (#{@volume}). #{@p_place}: #{@p_house}."
+      "#{fullnames} (#{@p_date}). #{@title} (#{@edit_num}) (#{@volume}). #{@p_place}: #{@p_house}."
     end 
     
-     def <=>(another)
-      @author<=>another.author
-       if (@author != another.author)
-      @author<=>another.author
-  elsif (@author == another.author && @p_date!=another.p_date)
-    @author<=>another.author
+     def <=> (another)
+       if (@author_surname != another.author_surname)
+      @author_surname<=>another.author_surname
+  elsif (@author_surname == another.author_surname && @p_date!=another.p_date)
+    @author_surname<=>another.author_surname
     @p_date<=>another.p_date
   end
     end
@@ -61,8 +63,7 @@ class Book < Biblioref
 end
 
 def <=>(another)
-  if @author == another.author && @p_date==another.p_date
-    @flag=1
+  if @author_surname== another.author_surname && @p_date==another.p_date
     @title<=>another.title
   else
       super
@@ -88,14 +89,14 @@ class EBook < Biblioref
     end
     
     def to_s
-          names =""
           editors = ""
+ fullnames = ""
           i=0
-  while i < @author.count
-if i != @author.count-1
-  names= names + "#{@author[i]} & "
+  while i < @author_name.count
+if i != @author_name.count-1
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}. & "
 else
-  names= names + "#{@author[i]}"
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}."
 end
   i=i+1
 end
@@ -110,12 +111,12 @@ elsif i == @editors.count-2
 end
   i=i+1
 end
-      "#{names} (#{@p_date}). #{@title_a}. En #{editors} (comps), #{@title} (pp. #{@pages}) (#{@edit_num}) (#{@volume}). #{@p_place}: #{@p_house}."
+      "#{fullnames} (#{@p_date}). #{@title_a}. En #{editors} (comps), #{@title} (pp. #{@pages}) (#{@edit_num}) (#{@volume}). #{@p_place}: #{@p_house}."
     end 
     
    def <=>(another)
-        if @author == another.author && @p_date==another.p_date
-          @flag=1
+        if @author_surname== another.author_surname && @p_date==another.p_date
+    @author_surname<=>another.author_surname
     @title_a<=>another.title_a
 else
   super
@@ -133,21 +134,21 @@ class Newspaper < Biblioref
   end
   
         def to_s
-          names =""
+  fullnames = ""
           i=0
-  while i < @author.count
-if i != @author.count-1
-  names= names + "#{@author[i]} & "
+  while i < @author_name.count
+if i != @author_name.count-1
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}. & "
 else
-  names= names + "#{@author[i]}"
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}."
 end
   i=i+1
-  end
-      "#{names} (#{@p_date}). #{@title_a}. #{@title}, pp. #{@pages}."
+end
+      "#{fullnames} (#{@p_date}). #{@title_a}. #{@title}, pp. #{@pages}."
    end
      def <=>(another)
-        if @author == another.author && @p_date==another.p_date
-          @flag=1
+        if @author_surname == another.author_surname && @p_date==another.p_date
+          @author_surname<=>another.author_surname
     @title_a<=>another.title_a
 else
   super
@@ -167,27 +168,26 @@ class EDoc < Biblioref
     end
     
       def to_s
-          names =""
-          isbns =""
+         fullnames = ""
           i=0
-while i < @author.count
-if i != @author.count-1
-  names= names + "#{@author[i]} & "
+  while i < @author_name.count
+if i != @author_name.count-1
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}. & "
 else
-  names= names + "#{@author[i]}"
+  fullnames= fullnames + "#{@author_surname[i]}, #{@author_name[i][0]}."
 end
   i=i+1
 end
  if @medium =="En línea"
-      "#{names} (#{@p_date}). #{@title} (#{@edit_num}), [#{@medium}]. #{@p_place}: #{@p_house}. Disponible en: #{@url} [#{@a_date}]."
+      "#{fullnames} (#{@p_date}). #{@title} (#{@edit_num}), [#{@medium}]. #{@p_place}: #{@p_house}. Disponible en: #{@url} [#{@a_date}]."
  else
-     "#{names} (#{@p_date}). #{@title} (#{@edit_num}), [#{@medium}]. #{@p_place}: #{@p_house} [#{@a_date}]."
+     "#{fullnames} (#{@p_date}). #{@title} (#{@edit_num}), [#{@medium}]. #{@p_place}: #{@p_house} [#{@a_date}]."
  end
 end
 
 def <=>(another)
-  if @author == another.author && @p_date==another.p_date
-    @flag=1
+  if @author_surname == another.author_surname && @p_date==another.p_date
+    @author_surname<=>another.author_surname
     @title<=>another.title
   else
       super
