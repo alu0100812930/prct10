@@ -24,7 +24,7 @@ una lista doblemente enlazada, con un enlace al nodo anterior además del siguie
 manera que sus instancias son enumerables a través de la integración con el módulo "Enumerable".
 
 El tercer fichero de clase es list_ref.rb, el cual contiene una clase hija RList de la clase padre DList de doubly_list, la cual sirve para representa 
-listas de citas y referencias bibliográficas en el formato de la Asociación de Psicología Americana (APA).
+listas de citas y referencias bibliográficas en el formato de la Asociación Estadounidense de Psicología (siglas APA en Inglés).
 
 Finalmente, existe un fichero de expectativas functional_spec.rb en el directorio spec, el cual contiene grupos de ejemplos de expectativas
 que se fueron escribiendo a medida que se desarrollaba el código para verificar y evaluar su funcionamiento. También se instaló y se configuró en el
