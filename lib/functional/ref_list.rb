@@ -28,7 +28,11 @@ def insert(content)
 end 
 
 def ordenar_externo(content)
+    if content.kind_of? Array
     orden = content.sort_by{|ref| ref}.reverse!
+else
+    orden=content
+end
     orden
 end
   
