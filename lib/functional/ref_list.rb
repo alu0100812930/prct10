@@ -2,12 +2,26 @@
 class RList < DList
     attr_accessor :letter #letra para los sufijos de los años
   def initialize(content = nil)
+      if content.kind_of? Array
+      content.each do |i|
+      raise ArgumentError, 'El objeto no es una referencia bibliográfica' unless i.kind_of? Biblioref
+  end
+  else
+      raise ArgumentError, 'El objeto no es una referencia bibliográfica' unless content.kind_of? Biblioref
+  end
       content= ordenar_externo(content)
   super(content)
   sufijos
   end
   
 def insert(content)
+    if content.kind_of? Array
+      content.each do |i|
+      raise ArgumentError, 'El objeto no es una referencia bibliográfica' unless i.kind_of? Biblioref
+  end
+  else
+      raise ArgumentError, 'eEl objeto no es una referencia bibliográfica' unless content.kind_of? Biblioref
+  end
     insert_h(content)
     quitarsufijos
     ordenar_interno
@@ -155,6 +169,10 @@ end
     aux=aux["next"]
 end
 cadena
+ end
+ 
+ def to_s
+     salida_funcional
  end
  
 end

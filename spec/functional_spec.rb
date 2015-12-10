@@ -2,19 +2,17 @@
 require 'spec_helper'
 
 describe Functional do
- before:all do 
+ before:each do 
         @diario= Newspaper.new(:author_name => "Juan", :author_surname => "Aguad", :title_a => "Más cerca", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
         @libro = Book.new(:author_name => ["Dave", "Albert", "Chad"], :author_surname => ["Thomas", "Hunt", "Fowler"], :p_date => "2013", :title => "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide", :volume =>1, :p_place =>"Ohio", :p_house => "Pragmatic Bookshelf",:edit_num => 4)
         @libroeditado= EBook.new(:author_name => "Javier", :author_surname => "Castanigno", :editor_name => ["Juan", "Manuel"] ,:editor_surname => ["Aguad", "Gutiérrez"], :title_a => "Técnicas, materiales y aplicaciones en nanotecnología", :title => "La Nueva Bioquímica", :volume => "3", :edit_num => 2, :pages => "189-191", :p_date => "2007", :p_place => "Madrid", :p_house => "Espasa")
         @edoc= EDoc.new(:author_name => ["Scott","Bob"],:author_surname => ["Chacon", "Straub"], :p_date=> "2009", :title => "Pro Git 2009th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2008, 22 de Mayo", :medium => "En línea")
     end
     
-    it "La salida en pantalla de los objetos de las referencias se corresponden con el formato de la Asociación de Psicología Americana" do
-      expect(@libro.to_s).to be == "Thomas, D. & Hunt, A. & Fowler, C. (2013). Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide (4) (1). Ohio: Pragmatic Bookshelf."
-      expect(@libroeditado.to_s).to be == "Castanigno, J. (2007). Técnicas, materiales y aplicaciones en nanotecnología. En J. Aguad & M. Gutiérrez (comps), La Nueva Bioquímica (pp. 189-191) (2) (3). Madrid: Espasa."
-      expect(@diario.to_s).to be == "Aguad, J. (2008). Más cerca. El Mercurio, pp. 4, Suplemento Deportes."
-      expect(@edoc.to_s).to be == "Chacon, S. & Straub, B. (2009). Pro Git 2009th Edition (5), [En línea]. Tenerife: Drago. Disponible en: https://git-scm.com/book/en/v2 [2008, 22 de Mayo]."
-    end
+    it "Se pueden devolver salidas formateadas en APA de las referencias desde la clase RList usando un método con objetos Proc" do
+    @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
+           expect(@listar.salida_funcional).to be == "[Aguad, J. (2008). Más cerca. El Mercurio, pp. 4, Suplemento Deportes.]<-->[Castanigno, J. (2007). Técnicas, materiales y aplicaciones en nanotecnología. En J. Aguad & M. Gutiérrez (comps), La Nueva Bioquímica (pp. 189-191) (2) (3). Madrid: Espasa.]<-->[Chacon, S. & Straub, B. (2009). Pro Git 2009th Edition (5), [En línea]. Tenerife: Drago. Disponible en: https://git-scm.com/book/en/v2 [2008, 22 de Mayo].]<-->[Thomas, D. & Hunt, A. & Fowler, C. (2013). Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide (4) (1). Ohio: Pragmatic Bookshelf.]"
+   end
     
     it "Las entradas de la lista de referencias debe estar en orden alfabético de acuerdo a los apellidos del primer autor de cada trabajo." do
       @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
@@ -41,12 +39,13 @@ describe Functional do
    @diario2= Newspaper.new(:author_name => "Juan", :author_surname => "Aguad", :title_a => "El atardecer", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
    @diario3= Newspaper.new(:author_name => "Juan", :author_surname => "Aguad", :title_a => "Problemas", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
     @diario4= Newspaper.new(:author_name => "Juan", :author_surname => "Aguad", :title_a => "Altura", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
-     @listar= RList.new([@diario4, @diario, @diario2, @diario3])
-      expect(@listar.to_s).to be == "[#{@diario4}]<-->[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]"
+     @listar= RList.new([@diario4, @diario, @diario2, @diario3, @edoc])
+      expect(@listar.to_s).to be == "[#{@diario4}]<-->[#{@diario2}]<-->[#{@diario}]<-->[#{@diario3}]<-->[#{@edoc}]"
       expect(@diario4.p_date).to be == "2008a"
       expect(@diario2.p_date).to be == "2008b"
       expect(@diario.p_date).to be == "2008c"
       expect(@diario3.p_date).to be == "2008d"
+      expect(@edoc.p_date).to be == "2009"
     end
     
    it "Se pueden insertar nuevas referencias a una lista, hacer extracciones y esta seguirá ordenada" do
@@ -63,8 +62,11 @@ describe Functional do
        expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@edoc2}]"
    end
    
-   it "Se pueden devolver salidas formateadas en APA de las referencias desde la clase RList usando un método con objetos Proc" do
-    @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
-           expect(@listar.salida_funcional).to be == @listar.to_s
-   end
+   
+    it "La lista de referencias sólo admite objetos o arrays de objetos de referencias" do
+     @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
+     expect(@listar).to be_a RList
+     expect{RList.new(3)}.to raise_error(ArgumentError) 
+     expect{@listar.insert([@edoc, "a"])}.to raise_error(ArgumentError)
+    end
 end
