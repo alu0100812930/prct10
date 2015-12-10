@@ -62,4 +62,9 @@ describe Functional do
        @listar.extract_end
        expect(@listar.to_s).to be == "[#{@diario}]<-->[#{@libroeditado}]<-->[#{@edoc}]<-->[#{@edoc2}]"
    end
+   
+   it "Se pueden devolver salidas formateadas en APA de las referencias desde la clase RList usando un método con objetos Proc" do
+    @listar= RList.new([@libro, @libroeditado, @diario, @edoc])
+           expect(@listar.salida_funcional).to be == @listar.to_s
+   end
 end
