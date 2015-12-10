@@ -5,7 +5,7 @@ describe Functional do
  before:all do 
         @diario= Newspaper.new(:author_name => "Juan", :author_surname => "Aguad", :title_a => "Más cerca", :title => "El Mercurio", :p_date => "2008", :pages => "4, Suplemento Deportes")
         @libro = Book.new(:author_name => ["Dave", "Albert", "Chad"], :author_surname => ["Thomas", "Hunt", "Fowler"], :p_date => "2013", :title => "Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide", :volume =>1, :p_place =>"Ohio", :p_house => "Pragmatic Bookshelf",:edit_num => 4)
-        @libroeditado= EBook.new(:author_name => "Javier", :author_surname => "Castanigno", :editors => ["J. Aguad", "M. Gutiérrez"], :title_a => "Técnicas, materiales y aplicaciones en nanotecnología", :title => "La Nueva Bioquímica", :volume => "3", :edit_num => 2, :pages => "189-191", :p_date => "2007", :p_place => "Madrid", :p_house => "Espasa")
+        @libroeditado= EBook.new(:author_name => "Javier", :author_surname => "Castanigno", :editor_name => ["Juan", "Manuel"] ,:editor_surname => ["Aguad", "Gutiérrez"], :title_a => "Técnicas, materiales y aplicaciones en nanotecnología", :title => "La Nueva Bioquímica", :volume => "3", :edit_num => 2, :pages => "189-191", :p_date => "2007", :p_place => "Madrid", :p_house => "Espasa")
         @edoc= EDoc.new(:author_name => ["Scott","Bob"],:author_surname => ["Chacon", "Straub"], :p_date=> "2009", :title => "Pro Git 2009th Edition", :edit_num => 5, :URL => "https://git-scm.com/book/en/v2", :p_place=> "Tenerife", :p_house => "Drago", :a_date => "2008, 22 de Mayo", :medium => "En línea")
     end
     

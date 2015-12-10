@@ -73,7 +73,7 @@ end
       "#{fullnames} (#{node["value"].p_date}). #{node["value"].title} (#{node["value"].edit_num}) (#{node["value"].volume}). #{node["value"].p_place}: #{node["value"].p_house}."}
       
       libroeditado = Proc.new{|node| 
- editors = ""
+        editors = ""
  fullnames = ""
           i=0
   while i < node["value"].author_name.count
@@ -85,13 +85,13 @@ end
   i=i+1
 end
 i=0
-  while i < node["value"].editors.count
-if i == node["value"].editors.count-1
-  editors= editors + "#{node["value"].editors[i]}"
-elsif i == node["value"].editors.count-2
-  editors= editors + "#{node["value"].editors[i]} & "
+   while i < node["value"].editor_name.count
+if i == node["value"].editor_name.count-1
+  editors= editors + "#{node["value"].editor_name[i][0]}. #{node["value"].editor_surname[i]}"
+elsif i == node["value"].editor_name.count-2
+  editors= editors + "#{node["value"].editor_name[i][0]}. #{node["value"].editor_surname[i]} & "
  else
- editors= editors + "#{node["value"].editors[i]}, "
+ editors= editors + "#{node["value"].editor_name[i][0]}. #{node["value"].editor_surname[i]}, "
 end
   i=i+1
 end

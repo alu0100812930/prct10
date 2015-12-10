@@ -1,9 +1,9 @@
 # encoding: UTF-8
 class Biblioref
-  include Comparable
-  attr_accessor :author_name
-  attr_accessor :author_surname
-      attr_accessor :title
+  include Comparable 
+  attr_accessor :author_name #Nombres de autores
+      attr_accessor :author_surname #Apellidos de autores
+      attr_accessor :title #Título de publicación
       attr_accessor :p_house #Casa editorial
       attr_accessor :p_place #Lugar de publicación
       attr_accessor :edit_num #Numero de edición
@@ -73,16 +73,22 @@ end
 
 class EBook < Biblioref
     attr_accessor :title_a, #Título de artículo
-    :editors, #Editores de artículo
+    :editor_name, #Nombres de editores de artículo
+    :editor_surname, #Apellidos de editores de artículo
     :pages #Paginas de artículo
     def initialize(params = {})
         super
-        @editors = []
-         if params.fetch(:editors, nil).class.to_s=="Array"
-            for i in 0..params.fetch(:editors, nil).count-1
-            @editors << params.fetch(:editors, nil)[i]
+        @editor_name = []
+        @editor_surname = []
+         if params.fetch(:editor_name, nil).class.to_s=="Array"
+            for i in 0..params.fetch(:editor_name, nil).count-1
+            @editor_name << params.fetch(:editor_name, nil)[i]
+            @editor_surname << params.fetch(:editor_surname, nil)[i]
           end
-      end
+    else
+      @editor_name << params.fetch(:editor_name, nil)
+            @editor_surname << params.fetch(:editor_surname, nil)
+    end
         @title_a=params.fetch(:title_a)
         @volume=params.fetch(:volume, "")
         @pages=params.fetch(:pages)
@@ -101,13 +107,13 @@ end
   i=i+1
 end
 i=0
-  while i < @editors.count
-if i == @editors.count-1
-  editors= editors + "#{@editors[i]}"
-elsif i == @editors.count-2
-  editors= editors + "#{@editors[i]} & "
+   while i < @editor_name.count
+if i == @editor_name.count-1
+  editors= editors + "#{@editor_name[i][0]}. #{@editor_surname[i]}"
+elsif i == @editor_name.count-2
+  editors= editors + "#{@editor_name[i][0]}. #{@editor_surname[i]} & "
  else
- editors= editors + "#{@editors[i]}, "
+ editors= editors + "#{@editor_name[i][0]}. #{@editor_surname[i]}, "
 end
   i=i+1
 end
