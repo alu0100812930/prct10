@@ -151,23 +151,23 @@ end
 while aux!=nil
     if aux["next"]!=nil
         if aux["value"].class.to_s=="Book"
-    cadena= cadena+"[#{libro.call(aux)}]<-->"
+    cadena= cadena+"#{libro.call(aux)}\n"
     elsif aux["value"].class.to_s=="EBook"
-    cadena= cadena+"[#{libroeditado.call(aux)}]<-->"
+    cadena= cadena+"#{libroeditado.call(aux)}\n"
     elsif aux["value"].class.to_s=="Newspaper"
-    cadena= cadena+"[#{periodico.call(aux)}]<-->"
+    cadena= cadena+"#{periodico.call(aux)}\n"
     elsif aux["value"].class.to_s=="EDoc"
-    cadena= cadena+"[#{edoc.call(aux)}]<-->"
+    cadena= cadena+"#{edoc.call(aux)}\n"
 end
 else
      if aux["value"].class.to_s=="Book"
-    cadena= cadena+"[#{libro.call(aux)}]"
+    cadena= cadena+"#{libro.call(aux)}\n"
     elsif aux["value"].class.to_s=="EBook"
-    cadena= cadena+"[#{libroeditado.call(aux)}]"
+    cadena= cadena+"#{libroeditado.call(aux)}\n"
     elsif aux["value"].class.to_s=="Newspaper"
-    cadena= cadena+"[#{periodico.call(aux)}]"
+    cadena= cadena+"#{periodico.call(aux)}\n"
     elsif aux["value"].class.to_s=="EDoc"
-    cadena= cadena+"[#{edoc.call(aux)}]"
+    cadena= cadena+"#{edoc.call(aux)}\n"
 end
 end
     aux=aux["next"]
